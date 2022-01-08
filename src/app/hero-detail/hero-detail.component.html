@@ -1,12 +1,22 @@
 <div *ngIf="hero">
 
 <h2>{{hero.name | uppercase}} Details</h2>
-<div><span>id: </span> {{hero.id}}</div>
-<div><span>name: </span> {{hero.name}}</div>
+<div><span>ID: </span> {{hero.id}}</div>
+<div><span>Name: </span> {{hero.name}}</div>
+<div><span>Alter ego: </span> {{hero.alterEgo}}</div>
+<div><span>Super power: </span> {{hero.power}}</div>
 <div>
-	<label for="name">Hero name: </label>
-	<input id="name" [(ngModel)]="hero.name" placeholder="name">
+	<form #heroForm="ngForm" (ngSubmit)="onSubmit(heroForm)" novalidate>
+		<label for="name">Hero name: </label>
+		<input id="name" name="name"[(ngModel)]="hero.name" class="form-control" placeholder="name"> <br>
+		<label for="alterEgo">Alter ego: </label>
+		<input id="alterEgo" name="alterEgo" [(ngModel)]="hero.alterEgo" class="form-control" placeholder="alter ego"><br>
+		<label for="power">Power: </label>
+		<select id="power" name="power" [(ngModel)]="hero.power" class="form-control" required>
+			<option *ngFor="let heroPower of powers" [value]="heroPower">{{heroPower}}</option>
+		</select>
+		<button type="submit" [disabled]="!heroForm.form.valid" class="btn btn-default">Save</button>
+		<button (click)="goBack()" class="btn btn-default">Go back</button>
+	</form>
+
 </div>
-</div>
-<button (click)="save()">save</button>
-<button (click)="goBack()">go back</button>

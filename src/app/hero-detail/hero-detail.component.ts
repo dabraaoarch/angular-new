@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Hero } from '../hero';
@@ -11,6 +12,7 @@ import { HeroService } from '../hero.service';
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero?: Hero;
+  powers = ['Really smart', 'Fast as light', 'Flexibility', 'Strong as steel'];
 
   constructor(
 	  private heroService: HeroService, 
@@ -31,12 +33,13 @@ export class HeroDetailComponent implements OnInit {
   goBack(): void{
 	this.location.back();
   }
-  
-  save(): void{
-	if(this.hero){
-		this.heroService.updateHero(this.hero)
-		.subscribe(() => this.goBack());
+
+  onSubmit(heroForm: NgForm){
+	if (heroForm.valid){
+		//this.hero = heroForm.value;
+		//console.log(heroForm.value
+		this.heroService.updateHero(this.hero as Hero).subscribe(() => this.goBack());
 	}
   }
-
+  
 }
